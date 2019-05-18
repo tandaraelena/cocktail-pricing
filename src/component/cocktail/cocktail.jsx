@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import AddCocktail from "./add-cocktail";
 import axios from "axios";
+
 const BASE_URL = "http://localhost:3456/";
 
 class Cocktail extends Component {
@@ -8,10 +10,8 @@ class Cocktail extends Component {
   };
 
   async getCocktail() {
-    try {
-      let { data } = await axios.get(`${BASE_URL}cocktail`);
-      this.setState({ cocktail: data });
-    } catch (error) {}
+    let { data } = await axios.get(`${BASE_URL}cocktail`);
+    this.setState({ cocktail: data });
   }
 
   componentDidMount() {
@@ -19,7 +19,14 @@ class Cocktail extends Component {
   }
 
   render() {
-    return <p>{this.state.cocktail.length}</p>;
+    return [
+      <div>
+        {this.state.cocktail.map(cocktail => (
+          <p>{cocktail.name}</p>
+        ))}
+      </div>,
+      <AddCocktail />
+    ];
   }
 }
 export default Cocktail;
