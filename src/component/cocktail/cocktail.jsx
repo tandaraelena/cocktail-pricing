@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import AddCocktail from "./add-cocktail";
 import axios from "axios";
-
-const BASE_URL = "http://localhost:3456/";
+import { BASE_URL } from "./constant";
 
 class Cocktail extends Component {
   state = {
@@ -18,14 +17,30 @@ class Cocktail extends Component {
     this.getCocktail();
   }
 
+  addCocktailToState = something => {
+    console.log(`bla bla bla ${something}`);
+    this.setState({
+      cocktail: [
+        ...this.state.cocktail,
+        {
+          name: something,
+          id: this.state.cocktail.length + 1
+        }
+      ]
+    });
+    console.log(this.state.cocktail);
+  };
+
   render() {
     return [
       <div>
-        {this.state.cocktail.map(cocktail => (
-          <p>{cocktail.name}</p>
-        ))}
-      </div>,
-      <AddCocktail />
+        <div>
+          {this.state.cocktail.map((cocktail, key) => (
+            <p key={key}>{cocktail.name}</p>
+          ))}
+        </div>
+        <AddCocktail fbi={this.addCocktailToState} />
+      </div>
     ];
   }
 }
